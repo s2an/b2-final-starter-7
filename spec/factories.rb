@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :coupon do
-    name { "MyString" }
-    unique_code { "MyString" }
-    value { 1 }
-    active { false }
-    merchant { nil }
-    invoice { nil }
+    name {Faker::Commerce.promotion_code(digits: 0)}
+    unique_code {Faker::Barcode.unique.ean}
+    value {[5,10,25,50,75].sample}
+    active {false}
+    merchant
+    invoice {nil}
   end
 
   factory :customer do
