@@ -1,6 +1,8 @@
+![Alt text](image.png)
+
 # Functionality Overview
 
-## A Coupon belongs to a Merchant
+- A Coupon belongs to a Merchant
 - An Invoice optionally belongs to a Coupon. An invoice may only have one coupon.
   - Note: When creating this new association on Invoice, your existing tests will fail unless the association is optional. Use these guides as a reference.
 - You are not required to build functionality for a user applying a coupon to an invoice, but can instead use test data, Rails console or seed data to add coupons to existing invoices to verify behavior.​
