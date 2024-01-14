@@ -22,9 +22,24 @@ RSpec.describe "coupon index" do
       # I'm taken back to the coupon index page 
       # And I can see my new coupon listed.
 
-    it "fdsjfsdnuj" do
+    it "adds a new coupon to a merchant" do
       visit merchant_coupons_path(@merchant)
-      # save_and_open_page
+      
+      expect(page).to have_link(new_merchant_coupon_path(@merchant))
+
+      click "New Coupon"
+
+      expect(current_path).to eq(new_merchant_coupon_path(@merchant))
+
+      fill_in "Name", with: "DealyDeal"
+      fill_in "Unique Code", with: "123|xyz"
+      fill_in "Amount", with: 1
+      fill_in "Amount Type", with: %
+
+      click "Submit"
+
+      expect(page).to eq(merchant_coupons_path(@merchant))
+      expect(page).to have_content("DealyDeal", "123|xyz", 1, "%")
     end
   end
 end
