@@ -1,4 +1,12 @@
 FactoryBot.define do
+  factory :coupon do
+    name {Faker::Commerce.promotion_code(digits: 0)}
+    unique_code {Faker::Barcode.unique.ean}
+    value {[5,10,25,50,75].sample}
+    active {false}
+    merchant
+  end
+
   factory :customer do
     first_name {Faker::Name.first_name}
     last_name {Faker::Dessert.variety}
@@ -6,13 +14,17 @@ FactoryBot.define do
 
   factory :invoice do
     status {[0,1,2].sample}
-    merchant
+    # merchant
     customer
+
+    trait :with_coupon do
+      coupon
+    end
   end
 
   factory :merchant do
     name {Faker::Space.galaxy}
-    invoices
+    # invoices
     items
   end
 
@@ -31,7 +43,8 @@ FactoryBot.define do
 
   factory :invoice_item do
     status {[0,1,2].sample}
-    merchant
+    # merchant
     invoice
+    item
   end
 end
