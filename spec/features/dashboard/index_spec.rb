@@ -93,6 +93,7 @@ RSpec.describe "merchant dashboard" do
     expect(page).to have_no_content(@customer_6.first_name)
     expect(page).to have_no_content(@customer_6.last_name)
   end
+
   it "can see a section for Items Ready to Ship with list of names of items ordered and ids" do
     within("#items_ready_to_ship") do
 
@@ -119,4 +120,26 @@ RSpec.describe "merchant dashboard" do
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
+
+  describe "US1: Merchant Coupons Index" do
+    # As a merchant
+    # When I visit my merchant dashboard page
+    # I see a link to view all of my coupons
+    # When I click this link
+    # I'm taken to my coupons index page
+    # Where I see all of my coupon names including their amount off 
+    # And each coupon's name is also a link to its show page."
+    end
+
+    it "adds a coupons index link" do
+      @coupon = create(:coupon)
+
+      expect(page).to have_link(merchants_coupons_path)
+
+      click_link "Coupons"
+
+      expect(current_path).to eq(merchants_coupons_path)
+
+      expect(page).to have_content(merchant_coupon_path(@coupon))
+    end
 end
