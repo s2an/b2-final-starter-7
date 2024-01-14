@@ -1,8 +1,10 @@
-<%# <%= render partial: "shared/nav" %> %>
+<%= render partial: "shared/nav" %>
+
+<%= "Coupons" %>
 
 <div class="ml-auto col-sm-6">
   <ul>
-    <% @coupons.each do |coupon| %>
+    <% @merchant.coupons.each do |coupon| %>
       <li><%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
       <%= coupon.value %></li>
     <% end %>
