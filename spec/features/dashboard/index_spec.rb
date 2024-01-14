@@ -135,11 +135,11 @@ RSpec.describe "merchant dashboard" do
       coupon = create(:coupon, merchant: @merchant1)
 
       save_and_open_page
-      expect(page).to have_link("Coupons")
-      click_link "Coupons"
-
-      expect(current_path).to eq(merchants_coupons_path)
-
-      expect(page).to have_content(merchant_coupon_path(@coupon))
+      expect(page).to have_link("Merchant's Coupons")
+      click_link "Merchant's Coupons"
+      
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
+      
+      expect(page).to have_link(coupon.name, href: merchant_coupon_path(@merchant, coupon))
     end
 end
