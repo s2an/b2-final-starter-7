@@ -5,7 +5,6 @@ FactoryBot.define do
     value {[5,10,25,50,75].sample}
     active {false}
     merchant
-    invoice {nil}
   end
 
   factory :customer do
