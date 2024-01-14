@@ -132,7 +132,7 @@ RSpec.describe "merchant dashboard" do
     end
 
     it "adds a coupons index link" do
-      @coupon = create(:coupon)
+      coupon = create(:coupon, merchant: @merchant1)
 
       expect(page).to have_link(merchants_coupons_path)
 
