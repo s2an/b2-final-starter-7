@@ -5,4 +5,10 @@ class Transaction < ApplicationRecord
   enum result: [:failed, :success]
 
   belongs_to :invoice
+
+  def redeem_coupon
+    if result == :success && invoice.coupon
+    invoice.coupons.redeemed +1
+    end
+  end
 end

@@ -1,6 +1,6 @@
 class Coupon < ApplicationRecord
   belongs_to :merchant
-  # has_many :invoices
+  has_many :invoices
 
   def redemptions
     # if a coupon is on an invoice
