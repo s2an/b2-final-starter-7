@@ -23,15 +23,15 @@ RSpec.describe "merchant coupon show" do
     
     it "displays the associated coupons, thier status, and number of times used" do
       visit merchant_coupon_path(@merchant, @coupon)
-require 'pry'; binding.pry
+
       expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
       
-      expect(page).to have_content(@merchant.coupon.name)
-      expect(page).to have_content(@merchant.coupon.unique_code)
-      expect(page).to have_content(@merchant.coupon.value)
-      expect(page).to have_content(@merchant.coupon.value_type)
-      expect(page).to have_content(@merchant.coupon.status)
-      expect(page).to have_content(@merchant.coupon.redemption_count)     
+      expect(page).to have_content(@coupon.name)
+      expect(page).to have_content(@coupon.unique_code)
+      expect(page).to have_content(@coupon.value)
+      expect(page).to have_content(@coupon.value_type)
+      expect(page).to have_content(@coupon.status)
+      expect(page).to have_content(@coupon.redemption_count)     
     end
   end
 end
