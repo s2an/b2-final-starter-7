@@ -1,0 +1,18 @@
+<%= render partial: "shared/nav" %>
+
+<body>
+  <div class="row">
+    <p class='col-12'>Coupon name: <%= @coupon.name %></p>
+  </div>
+
+  <p>Unique code: <%= @coupon.unique_code %></p>
+  <p>Value: <%= @coupon.value %> <%= @coupon.value_type %></p>
+
+  <div id="current-coupon-status">
+    <strong>Status: </strong><%= @coupon.status %>
+  </div>
+  <br>
+  <div id="current-coupon-redemption_count">
+    <strong>Redemption count: </strong><%= @coupon.redemptions %>
+  </div>
+</body>

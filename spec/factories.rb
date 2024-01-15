@@ -4,8 +4,10 @@ FactoryBot.define do
     unique_code {Faker::Barcode.unique.ean}
     value {[5,10,25,50,75].sample}
     value_type {["%", "$"].sample}
-    active {false}
+    status{["active", "inactive"].sample}
+    redemptions{0}
     merchant
+    # invoice
   end
 
   factory :customer do
