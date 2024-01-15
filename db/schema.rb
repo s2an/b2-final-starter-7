@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_190600) do
     t.string "name"
     t.string "unique_code"
     t.integer "value"
-    t.boolean "string"
+    t.string "status"
     t.bigint "merchant_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
