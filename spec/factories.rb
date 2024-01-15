@@ -5,8 +5,9 @@ FactoryBot.define do
     value {[5,10,25,50,75].sample}
     value_type {["%", "$"].sample}
     status{["active", "inactive"].sample}
-    redemptions{[0]}
+    redemptions{0}
     merchant
+    # invoice
   end
 
   factory :customer do

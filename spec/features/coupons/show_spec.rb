@@ -31,7 +31,7 @@ RSpec.describe "merchant coupon show" do
       expect(page).to have_content(@coupon.value)
       expect(page).to have_content(@coupon.value_type)
       expect(page).to have_content(@coupon.status)
-      expect(page).to have_content(@coupon.redemption_count)    
+      expect(page).to have_content(@coupon.redemptions)    
     end
   end
 end

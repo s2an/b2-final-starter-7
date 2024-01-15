@@ -19,6 +19,6 @@ RSpec.describe Transaction, type: :model do
     ii = create(:invoice_item, invoice: invoice, item: item)
     transaction = create(:transaction, invoice: invoice)
 
-    expect(transaction.redeem_coupon).to change(coupon.redemptions).by(1)
+    expect{ transaction.redeem_coupon }.to change{ coupon.redemptions }.by(1)
   end
 end
