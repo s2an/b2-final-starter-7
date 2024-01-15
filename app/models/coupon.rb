@@ -3,6 +3,8 @@ class Coupon < ApplicationRecord
   has_many :invoices
 
   def redemption_count
-    invoices.count
+    if invoices.count <= 5
+      invoices.count
+    end
   end
 end

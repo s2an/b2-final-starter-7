@@ -21,7 +21,8 @@ RSpec.describe Coupon, type: :model do
       invoice5 = create(:invoice, coupon: coupon)
       expect(coupon.redemption_count).to eq(5)
       
-      # invoice6 = create(:invoice, coupon: coupon)
+      invoice6 = create(:invoice, coupon: coupon)
+      expect(coupon.redemption_count).to eq(nil)
     end
   end
 
