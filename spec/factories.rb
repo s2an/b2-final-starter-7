@@ -3,6 +3,7 @@ FactoryBot.define do
     name {Faker::Commerce.promotion_code(digits: 0)}
     unique_code {Faker::Barcode.unique.ean}
     value {[5,10,25,50,75].sample}
+    value_type {["%", "$"].sample}
     active {false}
     merchant
   end
@@ -25,7 +26,7 @@ FactoryBot.define do
   factory :merchant do
     name {Faker::Space.galaxy}
     # invoices
-    items
+    # items
   end
 
   factory :item do
@@ -42,6 +43,8 @@ FactoryBot.define do
   end
 
   factory :invoice_item do
+    quantity {[1,2,3,4,5].sample}
+    unit_price {Faker::Commerce.price}
     status {[0,1,2].sample}
     # merchant
     invoice
