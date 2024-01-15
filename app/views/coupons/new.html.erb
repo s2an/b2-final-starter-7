@@ -1,6 +1,8 @@
 <h2>Create New Coupon Form</h2>
 
-  <%= form_with url: merchant_coupons_path, method: :post, data: {turbo: false} do |form| %>
+  <%= form_with url: merchant_coupons_path(@merchant), method: :post, data: {turbo: false} do |form| %>
+    <%= form.hidden_field :merchant_id, value: @merchant.id %>
+
     <%= form.label :name %>
     <%= form.text_field :name %> 
     <br>
@@ -10,5 +12,5 @@
     <%= form.label :value %>
     <%= form.number_field :value %> 
     <br>
-    <%= form.submit "Create New Coupon" %>
+    <%= form.submit "Create Coupon" %>
   <% end %>
