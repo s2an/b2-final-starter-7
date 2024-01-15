@@ -12,5 +12,8 @@
     <%= form.label :value %>
     <%= form.number_field :value %> 
     <br>
+    <%= form.label :value_type %>
+    <%= form.select :value_type, options_for_select([["",""], ["%", "%"], ["$", "$"]]) %>
+    <br>
     <%= form.submit "Create Coupon" %>
   <% end %>
