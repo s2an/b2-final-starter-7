@@ -1,6 +1,6 @@
 <%= render partial: "shared/nav" %>
 
-<%= "Coupons" %>
+<h2> Associated Coupons</h2>
 
 <div class="ml-auto col-sm-6">
   <ul>
@@ -10,3 +10,5 @@
     <% end %>
   </ul>
 </div>
+
+<%= link_to "Create New Coupon", new_merchant_coupon_path %>
