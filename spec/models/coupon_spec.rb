@@ -5,11 +5,4 @@ RSpec.describe Coupon, type: :model do
     it { should belong_to(:merchant) }
     # it { should have_many(:invoices) }
   end
-
-  describe "method tests" do
-    it "counts the number of times the coupon has been redeemed" do
-
-    end
-  end
-
 end

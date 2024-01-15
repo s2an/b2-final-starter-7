@@ -6,9 +6,16 @@ class Transaction < ApplicationRecord
 
   belongs_to :invoice
 
+  # I did all this, but the other started working: revisit because this is better
+  # def approve_transaction
+  #   transaction.result = "success"
+  #   invoice.status = "completed"
+  #     if invoice.coupon
+  #       transaction.redeem_coupon
+  #     end
+  # end
+
   def redeem_coupon
-    if result == :success && invoice.coupon
-    invoice.coupons.redeemed +1
-    end
+    invoice.coupon.increment!(:redemptions)
   end
 end

@@ -14,10 +14,12 @@ RSpec.describe Transaction, type: :model do
     merchant = create(:merchant)
     coupon = create(:coupon, merchant: merchant)
     customer = create(:customer)
-    invoice = create(:invoice, customer: customer, coupon: coupon)
+    invoice = create(:invoice, customer: customer, coupon: coupon, status: "in_progress")
     item = create(:item, merchant: merchant)
     ii = create(:invoice_item, invoice: invoice, item: item)
     transaction = create(:transaction, invoice: invoice)
+# require 'pry'; binding.pry
+
 
     expect{ transaction.redeem_coupon }.to change{ coupon.redemptions }.by(1)
   end
