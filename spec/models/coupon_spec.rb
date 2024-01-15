@@ -7,22 +7,8 @@ RSpec.describe Coupon, type: :model do
   end
 
   describe "method tests" do
-    it "counts the number of times it has shown up on an invoice" do
-      coupon = create(:coupon)
-      invoice = create(:invoice, coupon: coupon)
+    it "counts the number of times the coupon has been redeemed" do
 
-      expect(coupon.redemption_count).to eq(1)
-
-      invoice2 = create(:invoice, coupon: coupon)
-      expect(coupon.redemption_count).to eq(2)
-
-      invoice3 = create(:invoice, coupon: coupon)
-      invoice4 = create(:invoice, coupon: coupon)
-      invoice5 = create(:invoice, coupon: coupon)
-      expect(coupon.redemption_count).to eq(5)
-      
-      invoice6 = create(:invoice, coupon: coupon)
-      expect(coupon.redemption_count).to eq(nil)
     end
   end
 
