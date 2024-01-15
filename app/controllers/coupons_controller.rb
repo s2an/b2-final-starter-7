@@ -23,6 +23,6 @@ class CouponsController < ApplicationController
   private
 
   def coupon_params
-    params.permit(:name, :unique_code, :value)
+    params.permit(:name, :unique_code, :value, :value_type)
   end
 end

@@ -6,7 +6,8 @@
   <ul>
     <% @merchant.coupons.each do |coupon| %>
       <li><%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
-      <%= coupon.value %></li>
+      <%= coupon.value %>
+      <%= coupon.value_type %></li>
     <% end %>
   </ul>
 </div>

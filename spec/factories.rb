@@ -3,6 +3,7 @@ FactoryBot.define do
     name {Faker::Commerce.promotion_code(digits: 0)}
     unique_code {Faker::Barcode.unique.ean}
     value {[5,10,25,50,75].sample}
+    value_type {["%", "$"].sample}
     active {false}
     merchant
   end
