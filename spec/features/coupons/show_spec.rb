@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "merchant show" do
+RSpec.describe "merchant coupon show" do
   before :each do
     @merchant = create(:merchant)
     @coupon = create(:coupon, merchant: @merchant)
@@ -23,7 +23,7 @@ RSpec.describe "merchant show" do
     
     it "displays the associated coupons, thier status, and number of times used" do
       visit merchant_coupon_path(@merchant, @coupon)
-
+require 'pry'; binding.pry
       expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
       
       expect(page).to have_content(@merchant.coupon.name)
