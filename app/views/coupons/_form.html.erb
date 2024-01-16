@@ -1,0 +1,19 @@
+<h2>Create New Coupon Form</h2>
+
+  <%= form_with model: [@merchant, @coupon], method: method, url: url, class: 'merchant_coupon_form', local: true do |f| %>
+    <%= form.hidden_field :merchant_id, value: @merchant.id %>
+
+    <%= form.label :name %>
+    <%= form.text_field :name %> 
+    <br>
+    <%= form.label :unique_code %>
+    <%= form.text_field :unique_code %> 
+    <br>
+    <%= form.label :value %>
+    <%= form.number_field :value %> 
+    <br>
+    <%= form.label :value_type %>
+    <%= form.select :value_type, options_for_select([["",""], ["%", "%"], ["$", "$"]]) %>
+    <br>
+    <%= form.submit "Create Coupon" %>
+  <% end %>

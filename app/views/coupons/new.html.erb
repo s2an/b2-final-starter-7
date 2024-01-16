@@ -1,19 +1,19 @@
-<h2>Create New Coupon Form</h2>
+<%# <h2>Create New Coupon Form</h2> %>
 
-  <%= form_with url: merchant_coupons_path(@merchant), method: :post, data: {turbo: false} do |form| %>
-    <%= form.hidden_field :merchant_id, value: @merchant.id %>
+  <%# <%= form_with url: merchant_coupons_path(@merchant), method: :post, data: {turbo: false} do |form| %> %>
+    <%# <%= form.hidden_field :merchant_id, value: @merchant.id %> %>
 
-    <%= form.label :name %>
-    <%= form.text_field :name %> 
-    <br>
-    <%= form.label :unique_code %>
-    <%= form.text_field :unique_code %> 
-    <br>
-    <%= form.label :value %>
-    <%= form.number_field :value %> 
-    <br>
-    <%= form.label :value_type %>
-    <%= form.select :value_type, options_for_select([["",""], ["%", "%"], ["$", "$"]]) %>
-    <br>
-    <%= form.submit "Create Coupon" %>
-  <% end %>
+    <%# <%= form.label :name %> %>
+    <%# <%= form.text_field :name %>  %>
+    <%# <br> %>
+    <%# <%= form.label :unique_code %> %>
+    <%# <%= form.text_field :unique_code %>  %>
+    <%# <br> %>
+    <%# <%= form.label :value %> %>
+    <%# <%= form.number_field :value %>  %>
+    <%# <br> %>
+    <%# <%= form.label :value_type %> %>
+    <%# <%= form.select :value_type, options_for_select([["",""], ["%", "%"], ["$", "$"]]) %> %>
+    <%# <br> %>
+    <%# <%= form.submit "Create Coupon" %> %>
+  <%# <% end %> %>

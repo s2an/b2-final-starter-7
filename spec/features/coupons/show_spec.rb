@@ -50,9 +50,10 @@ RSpec.describe "merchant coupon show" do
       expect(@coupon.status).to eq("active")
       expect(page).to have_button("Deactivate")
 
-      save_and_open_page
       click_button "Deactivate"
       
+      # save_and_open_page
+      # require 'pry'; binding.pry
       expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
       expect(@coupon.status).to eq("inactive")
     end
