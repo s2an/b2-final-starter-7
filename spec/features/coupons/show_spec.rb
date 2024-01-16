@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "merchant coupon show" do
   before :each do
     @merchant = create(:merchant)
-    @coupon = create(:coupon, merchant: @merchant, status: :active)
     @customer = create(:customer)
     @invoice = create(:invoice, customer: @customer, coupon: @coupon)
     @item = create(:item, merchant: @merchant)
@@ -22,10 +21,12 @@ RSpec.describe "merchant coupon show" do
     # (Note: "use" of a coupon should be limited to successful transactions.)
     
     it "displays the associated coupons, thier status, and number of times used" do
+      @coupon = create(:coupon, merchant: @merchant)
+
       visit merchant_coupon_path(@merchant, @coupon)
-
+      
       expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
-
+      
       expect(page).to have_content(@coupon.name)
       expect(page).to have_content(@coupon.unique_code)
       expect(page).to have_content(@coupon.value)
@@ -34,7 +35,7 @@ RSpec.describe "merchant coupon show" do
       expect(page).to have_content(@coupon.redemptions)    
     end
   end
-
+  
   describe "US4: Merchant Coupon Deactivate" do
     # As a merchant 
     # When I visit one of my active coupon's show pages
@@ -42,8 +43,10 @@ RSpec.describe "merchant coupon show" do
     # When I click that button
     # I'm taken back to the coupon show page 
     # And I can see that its status is now listed as 'inactive'.
-
-    it "adds a deactivate button and decativates the merchant coupon" do
+    
+    it "adds a deactivate button and deactivates the merchant coupon" do
+      @coupon = create(:coupon, merchant: @merchant, status: :active)
+      
       visit merchant_coupon_path(@merchant, @coupon)
       expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
       
@@ -61,4 +64,32 @@ RSpec.describe "merchant coupon show" do
 
     end
   end
+
+  describe "US5: Merchant Coupon Activate" do
+    # As a merchant 
+    # When I visit one of my inactive coupon show pages
+    # I see a button to activate that coupon
+    # When I click that button
+    # I'm taken back to the coupon show page 
+    # And I can see that its status is now listed as 'active'.
+
+    it "adds an activate button and activates the merchant coupon" do
+      @coupon = create(:coupon, merchant: @merchant, status: :inactive)
+
+      visit merchant_coupon_path(@merchant, @coupon)
+      expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
+      
+      expect(@coupon.status).to eq("inactive")
+      expect(page).to have_button("Activate")
+
+      click_button "Activate"
+      @coupon.reload
+      
+      expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
+      expect(@coupon.status).to eq("active")
+
+    end
+  end
+
+
 end
