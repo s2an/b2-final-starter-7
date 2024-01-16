@@ -74,7 +74,7 @@ RSpec.describe "coupon index" do
     it "has a section for active coupons" do
       visit merchant_coupons_path(@merchant)
       expect(current_path).to eq(merchant_coupons_path(@merchant))
-      
+
       within("#active") do
       expect(page).to have_content(@coupon2.name)
       expect(page).to_not have_content(@coupon.name)
