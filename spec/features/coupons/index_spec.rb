@@ -27,7 +27,7 @@ RSpec.describe "coupon index" do
       expect(page).to have_link("Create New Coupon", href: new_merchant_coupon_path(@merchant))
       
       click_link "Create New Coupon"
-      
+
       expect(current_path).to eq(new_merchant_coupon_path(@merchant))
       fill_in "Name", with: "DealyDeal"
       fill_in "Unique code", with: "123|xyz"

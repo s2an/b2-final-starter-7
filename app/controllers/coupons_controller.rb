@@ -9,15 +9,10 @@ class CouponsController < ApplicationController
     @coupon = Coupon.new
   end
 
-  def create 
+  def create
     @merchant = Merchant.find(params[:merchant_id])
-    @coupon = @merchant.coupons.new(coupon_params)
-    if @coupon.save
-      redirect_to merchant_coupons_path(@merchant)
-    else
-      render :new
-      # add flash
-    end
+    @coupon = @merchant.coupons.create!(coupon_params)
+    redirect_to merchant_coupons_path(@merchant)
   end
 
   def show
