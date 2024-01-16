@@ -49,7 +49,7 @@ RSpec.describe "merchant coupon show" do
       
       visit merchant_coupon_path(@merchant, @coupon)
       expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
-      
+
       expect(@coupon.status).to eq("active")
       expect(page).to have_button("Deactivate")
 
@@ -91,5 +91,8 @@ RSpec.describe "merchant coupon show" do
     end
   end
 
+  # turn this into a sad path to limit the length of a unique code:
+  # ActiveModel::RangeError:
+  # 56267056333788300131 is out of range for ActiveModel::Type::Integer with limit 8 bytes
 
 end
