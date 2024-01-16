@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="column-header">
-        <p>Activate Coupons</p>
+        <p>Active Coupons</p>
       </div>
 
     <ul>
@@ -19,7 +19,6 @@
             <%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
             <%= coupon.value %>
             <%= coupon.value_type %>
-            <%= coupon.status %>
           </li>
           <% end %>
         <% end %>
@@ -41,7 +40,6 @@
           <%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
           <%= coupon.value %>
           <%= coupon.value_type %>
-          <%= coupon.status %>
         </li>
         <% end %>
       <% end %>
