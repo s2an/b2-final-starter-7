@@ -10,7 +10,11 @@
 
   <div id="current-coupon-status">
     <strong>Status: </strong><%= @coupon.status %>
-    <%= button_to "Deactivate", merchant_coupon_path(@merchant, @coupon), method: :patch, params: {coupon: {status: "inactive"}} %>
+    <% if @coupon.status == "active" %>
+      <%= button_to "Deactivate", merchant_coupon_path(@merchant, @coupon), method: :patch, params: {coupon: {status: "inactive"}} %>
+    <% else %>
+      <%= button_to "Activate", merchant_coupon_path(@merchant, @coupon), method: :patch, params: {coupon: {status: "active"}} %>
+    <% end %>
   </div>
   <br>
   <div id="current-coupon-redemption_count">
