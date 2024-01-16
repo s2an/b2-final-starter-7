@@ -9,15 +9,10 @@ class CouponsController < ApplicationController
     @coupon = Coupon.new
   end
 
-  def create 
+  def create
     @merchant = Merchant.find(params[:merchant_id])
-    @coupon = @merchant.coupons.new(coupon_params)
-    if @coupon.save
-      redirect_to merchant_coupons_path(@merchant)
-    else
-      render :new
-      # add flash
-    end
+    @coupon = @merchant.coupons.create!(coupon_params)
+    redirect_to merchant_coupons_path(@merchant)
   end
 
   def show
@@ -25,9 +20,23 @@ class CouponsController < ApplicationController
     @coupon = @merchant.coupons.find(params[:id])
   end
 
+  def edit
+
+  end
+
+  def update 
+    @merchant = Merchant.find(params[:merchant_id])
+    @coupon = @merchant.coupons.find(params[:id])
+    if @coupon.update(coupon_params)
+      redirect_to merchant_coupon_path(@merchant, @coupon)
+    else
+      redirect_to edit_merchant_coupon_path(@merchant, @coupon)
+    end
+  end
+
   private
 
   def coupon_params
-    params.permit(:name, :unique_code, :value, :value_type)
+    params.require(:coupon).permit(:name, :unique_code, :value, :value_type, :status)
   end
 end

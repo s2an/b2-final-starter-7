@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "merchant coupon show" do
   before :each do
     @merchant = create(:merchant)
-    @coupon = create(:coupon, merchant: @merchant)
+    @coupon = create(:coupon, merchant: @merchant, status: :active)
     @customer = create(:customer)
     @invoice = create(:invoice, customer: @customer, coupon: @coupon)
     @item = create(:item, merchant: @merchant)
@@ -32,6 +32,33 @@ RSpec.describe "merchant coupon show" do
       expect(page).to have_content(@coupon.value_type)
       expect(page).to have_content(@coupon.status)
       expect(page).to have_content(@coupon.redemptions)    
+    end
+  end
+
+  describe "US4: Merchant Coupon Deactivate" do
+    # As a merchant 
+    # When I visit one of my active coupon's show pages
+    # I see a button to deactivate that coupon
+    # When I click that button
+    # I'm taken back to the coupon show page 
+    # And I can see that its status is now listed as 'inactive'.
+
+    it "adds a deactivate button and decativates the merchant coupon" do
+      visit merchant_coupon_path(@merchant, @coupon)
+      expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
+      
+      expect(@coupon.status).to eq("active")
+      expect(page).to have_button("Deactivate")
+
+      click_button "Deactivate"
+      @coupon.reload
+      
+      expect(current_path).to eq(merchant_coupon_path(@merchant, @coupon))
+      expect(@coupon.status).to eq("inactive")
+    end
+
+    it "SP1: A coupon cannot be deactivated if there are any pending invoices with that coupon." do
+
     end
   end
 end
