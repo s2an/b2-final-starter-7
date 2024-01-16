@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe "coupon index" do
   before :each do
     @merchant = create(:merchant)
-    @coupon = create(:coupon, merchant: @merchant)
+    @coupon = create(:coupon, merchant: @merchant, status: "inactive")
+    @coupon2 = create(:coupon, merchant: @merchant, status: "active")
     @customer = create(:customer)
     @invoice = create(:invoice, customer: @customer, coupon: @coupon)
     @item = create(:item, merchant: @merchant)
@@ -53,5 +54,32 @@ RSpec.describe "coupon index" do
     it "tests SP2: Coupon code entered is NOT unique" do
       
     end
+  end
+
+  describe "US6: Merchant Coupon Index Sorted" do
+    # As a merchant
+    # When I visit my coupon index page
+    # I can see that my coupons are separated between active and inactive coupons.
+
+    it "has a section for inactive coupons" do
+      visit merchant_coupons_path(@merchant)
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
+      
+      within("#inactive") do
+      expect(page).to have_content(@coupon.name)
+      expect(page).to_not have_content(@coupon2.name)
+      end
+    end
+  
+    it "has a section for active coupons" do
+      visit merchant_coupons_path(@merchant)
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
+      
+      within("#active") do
+      expect(page).to have_content(@coupon2.name)
+      expect(page).to_not have_content(@coupon.name)
+      end
+    end
+
   end
 end

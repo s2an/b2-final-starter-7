@@ -1,15 +1,43 @@
 <%= render partial: "shared/nav" %>
 
-<h2> Merchants Associated Coupons</h2>
+<body>
+  <div class="row">
+    <p class='col-12'>Merchant's Associated Coupons</p>
+  </div>
 
-<div class="ml-auto col-sm-6">
-  <ul>
-    <% @merchant.coupons.each do |coupon| %>
-      <li><%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
-      <%= coupon.value %>
-      <%= coupon.value_type %></li>
-    <% end %>
-  </ul>
-</div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="column-header">
+        <p>Activate Coupons</p>
+      </div>
 
+    <ul>
+      <section id="active">
+      <% @merchant.coupons.each do |coupon| %>
+        <li><%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
+        <%= coupon.value %>
+        <%= coupon.value_type %>
+        <%= coupon.status %></li>
+      <% end %>
+    </ul>
+
+    </div>
+
+    <div class="col-sm-6">
+      <div class="column-header">
+        <p>Inactive Coupons</p>
+      </div>
+    </div>
+
+    <ul>
+      <section id="inactive">
+      <% @merchant.coupons.each do |coupon| %>
+        <li><%= link_to coupon.name, merchant_coupon_path(@merchant, coupon) %>
+        <%= coupon.value %>
+        <%= coupon.value_type %>
+        <%= coupon.status %></li>
+      <% end %>
+    </ul>
+  </div>
+</body>
 <%= link_to "Create New Coupon", new_merchant_coupon_path %>
