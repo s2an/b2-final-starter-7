@@ -30,7 +30,11 @@ RSpec.describe Coupon, type: :model do
       transaction_1 = create(:transaction, invoice: invoice_1, result: "success")
       transaction_2 = create(:transaction, invoice: invoice_2, result: "success")
       transaction_3 = create(:transaction, invoice: invoice_3, result: "success")
-      
+
+      invoice_1.redeem_coupon
+      invoice_2.redeem_coupon
+      invoice_3.redeem_coupon
+
       expect(coupon.count_successful_uses).to eq(3)       
     end
   end

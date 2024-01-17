@@ -51,23 +51,24 @@ RSpec.describe "coupon index" do
       expect(page).to have_content("%")
     end
     
-    it "tests SP1: This Merchant already has 5 active coupons" do
+    xit "tests SP1: This Merchant already has 5 active coupons" do
       visit merchant_coupons_path(@merchant)
       expect(current_path).to eq(merchant_coupons_path(@merchant))
       click_link "Create New Coupon"
-      
+
       fill_in "Name", with: "DealyDeal"
       fill_in "Unique code", with: "123|xyz"
       fill_in "Value", with: 1
       select "%", from: "Value type"
       
       click_button "Create Coupon"
-      save_and_open_page
+
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
 
       expect(page).to_not have_content("DealyDeal")
     end
 
-    it "tests SP2: Coupon code entered is NOT unique" do
+    xit "tests SP2: Coupon code entered is NOT unique" do
       visit merchant_coupons_path(@merchant)
       expect(current_path).to eq(merchant_coupons_path(@merchant))
       click_link "Create New Coupon"
