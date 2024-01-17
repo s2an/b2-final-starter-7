@@ -15,6 +15,9 @@ class Transaction < ApplicationRecord
   #     end
   # end
 
+  # Active Record Query!!!!!!!!!
+  
+
   def redeem_coupon
     if invoice.coupon.redemptions < 5
       invoice.coupon.increment!(:redemptions)

@@ -108,21 +108,31 @@ RSpec.describe "invoices show" do
     # And I see the name and code of the coupon used as a link to that coupon's show page.
     
     it "displays the invoice subtotal (before discount)" do
-      visit merchant_invoice_path(@merchant1, @invoice_1)
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
       
-      expect(page).to have_content(@invoice.subtotal)
+      visit merchant_invoice_path(merchant, @invoice_2)
+      save_and_open_page
+      expect(@invoice_2.subtotal).to eq(10.0)
     end
     
-    xit "displays the grand total (after discount)" do
-      visit merchant_invoice_path(@merchant1, @invoice_1)
+    it "displays the grand total (after discount)" do
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
       
-      expect(page).to have_content(@invoice.grand_total)
+      visit merchant_invoice_path(merchant, @invoice_2)
+      
+      # require 'pry'; binding.pry
+      expect(@invoice_2.grand_total_revenue).to eq(5.0)
     end
     
-    xit "displays the name and code of coupon as a link to coupon show page" do
-      visit merchant_invoice_path(@merchant1, @invoice_1)
+    it "displays the name and code of coupon as a link to coupon show page" do
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
       
-      expect(page).to have_link("#{@coupon.name} + #{@coupon.unique_code}", href: merchant_coupon_path)
+      visit merchant_invoice_path(merchant, @invoice_2)
+      
+      expect(page).to have_link("#{coupon.name} #{coupon.unique_code}", href: merchant_coupon_path(merchant, coupon))
     end
   end
 end
