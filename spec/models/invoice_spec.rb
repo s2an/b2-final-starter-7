@@ -36,5 +36,37 @@ RSpec.describe Invoice, type: :model do
       expect(invoice.subtotal).to eq(10)
       expect(invoice.grand_total_revenue).to eq(5)
     end
+
+    it "redeem_coupon" do
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant)
+      customer = create(:customer)
+      invoice = create(:invoice, customer: customer, coupon: coupon, status: "in_progress")
+      item = create(:item, merchant: merchant)
+      ii = create(:invoice_item, invoice: invoice, item: item)
+      transaction = create(:transaction, invoice: invoice, result: "success")
+
+      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
+    end
+
+    it "does not redeem a coupon if it already has five redemptions" do
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant)
+      customer = create(:customer)
+      invoice = create(:invoice, customer: customer, coupon: coupon, status: "in_progress")
+      item = create(:item, merchant: merchant)
+      ii = create(:invoice_item, invoice: invoice, item: item)
+      transaction = create(:transaction, invoice: invoice, result: "success")
+      
+      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
+      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
+      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
+      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
+      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
+      
+      invoice.redeem_coupon
+      
+      expect(coupon.redemptions).to eq(5)
+    end
   end
 end

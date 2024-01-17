@@ -37,7 +37,7 @@ class Invoice < ApplicationRecord
 
   def redeem_coupon
     transactions.each do |transaction|
-      if coupon && coupon.status == "active" && transaction.result == "success"
+      if coupon && coupon.status == "active" && transaction.result == "success" &&  coupon.redemptions < 5
         coupon.increment!(:redemptions)
       end
     end
