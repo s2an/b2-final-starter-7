@@ -5,6 +5,10 @@ RSpec.describe "coupon index" do
     @merchant = create(:merchant)
     @coupon = create(:coupon, merchant: @merchant, status: "inactive")
     @coupon2 = create(:coupon, merchant: @merchant, status: "active")
+    @coupon3 = create(:coupon, merchant: @merchant, status: "active")
+    @coupon4 = create(:coupon, merchant: @merchant, status: "active")
+    @coupon5 = create(:coupon, merchant: @merchant, status: "active")
+    @coupon6 = create(:coupon, merchant: @merchant, status: "active")
     @customer = create(:customer)
     @invoice = create(:invoice, customer: @customer, coupon: @coupon)
     @item = create(:item, merchant: @merchant)
@@ -31,14 +35,14 @@ RSpec.describe "coupon index" do
       click_link "Create New Coupon"
       
       expect(current_path).to eq(new_merchant_coupon_path(@merchant))
-
+      
       fill_in "Name", with: "DealyDeal"
       fill_in "Unique code", with: "123|xyz"
       fill_in "Value", with: 1
       select "%", from: "Value type"
       
       click_button "Create Coupon"
-
+      
       expect(current_path).to eq(merchant_coupons_path(@merchant))
       
       # need to add better targeting here
@@ -46,9 +50,21 @@ RSpec.describe "coupon index" do
       expect(page).to have_content(1)
       expect(page).to have_content("%")
     end
-
+    
     it "tests SP1: This Merchant already has 5 active coupons" do
+      visit merchant_coupons_path(@merchant)
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
+      click_link "Create New Coupon"
+      
+      fill_in "Name", with: "DealyDeal"
+      fill_in "Unique code", with: "123|xyz"
+      fill_in "Value", with: 1
+      select "%", from: "Value type"
+      
+      click_button "Create Coupon"
+      save_and_open_page
 
+      expect(page).to_not have_content("DealyDeal")
     end
 
     it "tests SP2: Coupon code entered is NOT unique" do
