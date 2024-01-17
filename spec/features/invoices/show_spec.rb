@@ -112,18 +112,22 @@ RSpec.describe "invoices show" do
       coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
       
       visit merchant_invoice_path(merchant, @invoice_2)
-      save_and_open_page
+
       expect(@invoice_2.subtotal).to eq(10.0)
     end
     
     it "displays the grand total (after discount)" do
-      merchant = create(:merchant)
+      merchant = Merchant.create!(name: "Hair Care")
       coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
+      item = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant.id, status: 1)
+      customer = Customer.create!(first_name: "Joey", last_name: "Smith")
+      invoice = Invoice.create!(customer_id: customer.id, status: 2, coupon: coupon)
+      ii = InvoiceItem.create!(invoice_id: invoice.id, item_id: item.id, quantity: 1, unit_price: 10, status: 2)
+      transaction = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: invoice.id)
       
-      visit merchant_invoice_path(merchant, @invoice_2)
+      visit merchant_invoice_path(merchant, invoice)
       
-      # require 'pry'; binding.pry
-      expect(@invoice_2.grand_total_revenue).to eq(5.0)
+      expect(invoice.grand_total_revenue).to eq(5.0)
     end
     
     it "displays the name and code of coupon as a link to coupon show page" do
