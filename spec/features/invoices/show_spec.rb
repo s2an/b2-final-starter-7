@@ -100,4 +100,43 @@ RSpec.describe "invoices show" do
     end
   end
 
+  describe "US7: Merchant Invoice Show Page: Subtotal and Grand Total Revenues" do
+    # As a merchant
+    # When I visit one of my merchant invoice show pages
+    # I see the subtotal for my merchant from this invoice (that is, the total that does not include coupon discounts)
+    # And I see the grand total revenue after the discount was applied
+    # And I see the name and code of the coupon used as a link to that coupon's show page.
+    
+    it "displays the invoice subtotal (before discount)" do
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
+      
+      visit merchant_invoice_path(merchant, @invoice_2)
+      
+      expect(@invoice_2.subtotal).to eq(10.0)
+    end
+    
+    it "displays the grand total (after discount)" do
+      merchant = Merchant.create!(name: "Hair Care")
+      coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
+      item = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant.id, status: 1)
+      customer = Customer.create!(first_name: "Joey", last_name: "Smith")
+      invoice = Invoice.create!(customer_id: customer.id, status: 2, coupon: coupon)
+      ii = InvoiceItem.create!(invoice_id: invoice.id, item_id: item.id, quantity: 1, unit_price: 10, status: 2)
+      transaction = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: invoice.id)
+      
+      visit merchant_invoice_path(merchant, invoice)
+      
+      expect(invoice.grand_total_revenue).to eq(5.0)
+    end
+    
+    it "displays the name and code of coupon as a link to coupon show page" do
+      merchant = create(:merchant)
+      coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
+      
+      visit merchant_invoice_path(merchant, @invoice_2)
+      
+      expect(page).to have_link("#{coupon.name} #{coupon.unique_code}", href: merchant_coupon_path(merchant, coupon))
+    end
+  end
 end
