@@ -17,10 +17,10 @@ class Transaction < ApplicationRecord
 
   # Active Record Query!!!!!!!!!
   
-
-  def redeem_coupon
-    if invoice.coupon.redemptions < 5
-      invoice.coupon.increment!(:redemptions)
-    end
-  end
+#   # took this out to use AR in my coupon controller
+  # def redeem_coupon
+  #   if invoice.coupon.redemptions < 5
+  #     invoice.coupon.increment!(:redemptions)
+  #   end
+  # end
 end
