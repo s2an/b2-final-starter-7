@@ -1,0 +1,5 @@
+id,name,unique_code,value,value_type,status,redemptions,created_at,updated_at
+1,SpringSale2024,SPRING24,10,%,active,0,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
+2,SummerSale2024,SUMMER24,20,$,active,0,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
+3,FallSale2024,FALL24,50,$,active,1,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
+3,WinterSale2024,WINTER24,100,$,inactive,5,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC

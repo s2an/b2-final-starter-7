@@ -7,7 +7,7 @@ namespace :csv_load do
       ActiveRecord::Base.connection.reset_pk_sequence!("customers")
       puts "Customers imported."
    end
-
+   
    task :merchants => :environment do
       CSV.foreach("db/data/merchants.csv", headers: true) do |row|
          Merchant.create!(row.to_hash)
@@ -16,14 +16,22 @@ namespace :csv_load do
       puts "Merchants imported."
    end
 
+   task :coupons => :environment do
+      CSV.foreach("db/data/coupons.csv", headers: true) do |row|
+         Coupon.create!(row.to_hash)
+      end
+      ActiveRecord::Base.connection.reset_pk_sequence!("coupons")
+      puts "Coupons imported."
+   end
+   
    task :items => :environment do
       CSV.foreach("db/data/items.csv", headers: true) do |row|
          Item.create!(id: row.to_hash["id"], name: row.to_hash["name"], description: row.to_hash["description"], unit_price: row.to_hash["unit_price"].to_f / 100, created_at: row.to_hash["created_at"], updated_at: row.to_hash["updated_at"], merchant_id: row.to_hash["merchant_id"], status: 1)
       end
       ActiveRecord::Base.connection.reset_pk_sequence!("items")
       puts "Items imported."
-      end
-
+   end
+   
    task :invoices => :environment do
       CSV.foreach("db/data/invoices.csv", headers: true) do |row|
          if row.to_hash["status"] == "cancelled"
@@ -34,15 +42,15 @@ namespace :csv_load do
             status = 2
          end
          Invoice.create!({ id:          row[0],
-                           customer_id: row[1],
-                           status:      status,
-                           created_at:  row[4],
-                           updated_at:  row[5] })
+         customer_id: row[1],
+         status:      status,
+         created_at:  row[4],
+         updated_at:  row[5] })
       end
       ActiveRecord::Base.connection.reset_pk_sequence!("invoices")
       puts "Invoices imported."
    end
-
+   
    task :transactions => :environment do
       CSV.foreach("db/data/transactions.csv", headers: true) do |row|
          if row.to_hash["result"] == "failed"
@@ -51,17 +59,17 @@ namespace :csv_load do
             result = 1
          end
          Transaction.create!({ id:                          row[0],
-                              invoice_id:                  row[1],
-                              credit_card_number:          row[2],
-                              credit_card_expiration_date: row[3],
-                              result:                      result,
-                              created_at:                  row[5],
-                              updated_at:                  row[6] })
+         invoice_id:                  row[1],
+         credit_card_number:          row[2],
+         credit_card_expiration_date: row[3],
+         result:                      result,
+         created_at:                  row[5],
+         updated_at:                  row[6] })
       end
       ActiveRecord::Base.connection.reset_pk_sequence!("transactions")
       puts "Transactions imported."
    end
-
+   
    task :invoice_items => :environment do
       CSV.foreach("db/data/invoice_items.csv", headers: true) do |row|
          if row.to_hash["status"] == "pending"
@@ -84,8 +92,10 @@ namespace :csv_load do
       puts "InvoiceItems imported."
    end
 
+   
+
    task :all do 
-      [:customers, :invoices, :merchants, :items, :invoice_items, :transactions].each do |task|
+      [:customers, :invoices, :merchants, :coupons, :items, :invoice_items, :transactions].each do |task|
          Rake::Task["csv_load:#{task}".to_sym].invoke
       end
    end
