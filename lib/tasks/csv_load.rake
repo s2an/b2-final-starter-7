@@ -16,13 +16,13 @@ namespace :csv_load do
       puts "Merchants imported."
    end
 
-   task :coupons => :environment do
-      CSV.foreach("db/data/coupons.csv", headers: true) do |row|
-         Coupon.create!(row.to_hash)
-      end
-      ActiveRecord::Base.connection.reset_pk_sequence!("coupons")
-      puts "Coupons imported."
-   end
+   # task :coupons => :environment do
+   #    CSV.foreach("db/data/coupons.csv", headers: true) do |row|
+   #       Coupon.create!(row.to_hash)
+   #    end
+   #    ActiveRecord::Base.connection.reset_pk_sequence!("coupons")
+   #    puts "Coupons imported."
+   # end
    
    task :items => :environment do
       CSV.foreach("db/data/items.csv", headers: true) do |row|
@@ -95,7 +95,8 @@ namespace :csv_load do
    
 
    task :all do 
-      [:customers, :invoices, :merchants, :coupons, :items, :invoice_items, :transactions].each do |task|
+      [:customers, :merchants, :invoices, :items, :invoice_items, :transactions].each do |task|
+      # [:customers, :merchants, :coupons, :invoices, :items, :invoice_items, :transactions].each do |task|
          Rake::Task["csv_load:#{task}".to_sym].invoke
       end
    end

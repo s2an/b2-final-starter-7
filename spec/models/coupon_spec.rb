@@ -46,10 +46,11 @@ RSpec.describe Coupon, type: :model do
       coupon3 = create(:coupon, merchant: merchant, status: "active")
       coupon4 = create(:coupon, merchant: merchant, status: "active")
       coupon5 = create(:coupon, merchant: merchant, status: "active")
-      coupon6 = create(:coupon, merchant: merchant, status: "active")
-
-      expect(coupon6.valid?).to be false
-      expect(coupon6.errors[:base]).to include("Merchant has maximum amount of coupons (5)")
+      expect { create(:coupon, merchant: merchant, status: "active") }.to raise_error(ActiveRecord::RecordInvalid)
+      # require 'pry'; binding.pry the validates fails it because it cannot make it
+# require 'pry'; binding.pry
+      # expect(coupon6.valid?).to be false
+      # expect(coupon6.errors[:base]).to include("Merchant has maximum amount of coupons (5)")
     end
   end
 end

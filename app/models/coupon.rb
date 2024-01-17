@@ -12,7 +12,7 @@ class Coupon < ApplicationRecord
   end
 
   def coupon_limit
-    if merchant.coupons.where(status: "active").count >= 5
+    if merchant && merchant.coupons.where(status: "active").count >= 5
       errors.add(:base, "Merchant has maximum amount of coupons (5)")
     end
   end
