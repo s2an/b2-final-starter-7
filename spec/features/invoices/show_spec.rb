@@ -112,7 +112,7 @@ RSpec.describe "invoices show" do
       coupon = create(:coupon, merchant: merchant, value: 50, value_type: "%", status: "active")
       
       visit merchant_invoice_path(merchant, @invoice_2)
-
+      
       expect(@invoice_2.subtotal).to eq(10.0)
     end
     
