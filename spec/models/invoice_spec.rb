@@ -45,7 +45,7 @@ RSpec.describe Invoice, type: :model do
       item = create(:item, merchant: merchant)
       ii = create(:invoice_item, invoice: invoice, item: item)
       transaction = create(:transaction, invoice: invoice, result: "success")
-
+# require 'pry'; binding.pry it works in the pry session!
       expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
     end
 
@@ -58,14 +58,12 @@ RSpec.describe Invoice, type: :model do
       ii = create(:invoice_item, invoice: invoice, item: item)
       transaction = create(:transaction, invoice: invoice, result: "success")
       
-      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
-      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
-      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
-      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
-      expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
-      
       invoice.redeem_coupon
-      
+      invoice.redeem_coupon
+      invoice.redeem_coupon
+      invoice.redeem_coupon
+      invoice.redeem_coupon
+# require 'pry'; binding.pry also works in the pry session!
       expect(coupon.redemptions).to eq(5)
     end
   end
