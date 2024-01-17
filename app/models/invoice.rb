@@ -30,8 +30,18 @@ class Invoice < ApplicationRecord
     [total - discount, 0].max
   end
   
-
   def grand_total_revenue
     coupon_discount(subtotal)
   end
+
+
+  def redeem_coupon
+    transactions.each do |transaction|
+      if coupon && coupon.status == "active" && transaction.result == "success" &&  coupon.redemptions < 5
+        coupon.increment!(:redemptions)
+      end
+    end
+  end
+  
+
 end

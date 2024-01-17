@@ -1,18 +1,29 @@
 <h2>Create New Coupon Form</h2>
 
-  <%= form_with model: @coupon, method: method, url: url, class: 'merchant_coupon_form', local: true do |f| %>
-    <%= f.hidden_field :merchant_id, value: @merchant.id %>
-    <%= f.label :name %>
-    <%= f.text_field :name %> 
-    <br>
-    <%= f.label :unique_code %>
-    <%= f.text_field :unique_code %> 
-    <br>
-    <%= f.label :value %>
-    <%= f.number_field :value %> 
-    <br>
-    <%= f.label :value_type %>
-    <%= f.select :value_type, options_for_select([["",""], ["%", "%"], ["$", "$"]]) %>
-    <br>
-    <%= f.submit "Create Coupon" %>
+<%= form_with model: @coupon, method: method, url: url, class: 'merchant_coupon_form', local: true do |f| %>
+  
+  <% if @coupon.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @coupon.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
+
+  <%= f.hidden_field :merchant_id, value: @merchant.id %>
+  <%= f.label :name %>
+  <%= f.text_field :name %> 
+  <br>
+  <%= f.label :unique_code %>
+  <%= f.text_field :unique_code %> 
+  <br>
+  <%= f.label :value %>
+  <%= f.number_field :value %> 
+  <br>
+  <%= f.label :value_type %>
+  <%= f.select :value_type, options_for_select([["",""], ["%", "%"], ["$", "$"]]) %>
+  <br>
+  <%= f.submit "Create Coupon" %>
+<% end %>
