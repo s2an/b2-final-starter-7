@@ -68,8 +68,32 @@ RSpec.describe "coupon index" do
     end
 
     it "tests SP2: Coupon code entered is NOT unique" do
+      visit merchant_coupons_path(@merchant)
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
+      click_link "Create New Coupon"
       
+      fill_in "Name", with: "DealyDeal"
+      fill_in "Unique code", with: "123|xyz"
+      fill_in "Value", with: 1
+      select "%", from: "Value type"
+      
+      click_button "Create Coupon"
+
+      expect(current_path).to eq(merchant_coupons_path(@merchant))
+      click_link "Create New Coupon"
+      
+      fill_in "Name", with: "DealyDealII"
+      fill_in "Unique code", with: "123|xyz"
+      fill_in "Value", with: 1
+      select "%", from: "Value type"
+
+      expect(page).to have_content("Code must be unique")
     end
+    # This validation does not create a uniqueness constraint in the database,
+    # so it may happen that two different database connections create two records with the same value for a column that you intend to be unique.
+    # To avoid that, you must create a unique index on that column in your database.
+
+
   end
 
   describe "US6: Merchant Coupon Index Sorted" do
