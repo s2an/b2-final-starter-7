@@ -39,19 +39,19 @@ RSpec.describe Invoice, type: :model do
 
     it "redeem_coupon" do
       merchant = create(:merchant)
-      coupon = create(:coupon, merchant: merchant)
+      coupon = create(:coupon, merchant: merchant, status: "active")
       customer = create(:customer)
       invoice = create(:invoice, customer: customer, coupon: coupon, status: "in_progress")
       item = create(:item, merchant: merchant)
       ii = create(:invoice_item, invoice: invoice, item: item)
       transaction = create(:transaction, invoice: invoice, result: "success")
-# require 'pry'; binding.pry it works in the pry session!
+
       expect{ invoice.redeem_coupon }.to change{ coupon.redemptions }.by(1)
     end
 
     it "does not redeem a coupon if it already has five redemptions" do
       merchant = create(:merchant)
-      coupon = create(:coupon, merchant: merchant)
+      coupon = create(:coupon, merchant: merchant, status: "active")
       customer = create(:customer)
       invoice = create(:invoice, customer: customer, coupon: coupon, status: "in_progress")
       item = create(:item, merchant: merchant)
@@ -63,7 +63,7 @@ RSpec.describe Invoice, type: :model do
       invoice.redeem_coupon
       invoice.redeem_coupon
       invoice.redeem_coupon
-# require 'pry'; binding.pry also works in the pry session!
+
       expect(coupon.redemptions).to eq(5)
     end
   end
