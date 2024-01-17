@@ -18,7 +18,7 @@ RSpec.describe Coupon, type: :model do
     it "tests count_successful_uses method" do
       merchant = create(:merchant)
       customer = create(:customer)
-      coupon = create(:coupon, merchant: merchant)
+      coupon = create(:coupon, merchant: merchant, status: "active")
       item = create(:item, merchant: merchant)
       
       invoice_1 = create(:invoice, customer: customer, coupon: coupon)
@@ -36,6 +36,20 @@ RSpec.describe Coupon, type: :model do
       invoice_3.redeem_coupon
 
       expect(coupon.count_successful_uses).to eq(3)       
+    end
+
+    it "tests coupon limit" do
+      merchant = create(:merchant)
+      customer = create(:customer)
+      coupon1 = create(:coupon, merchant: merchant, status: "active")
+      coupon2 = create(:coupon, merchant: merchant, status: "active")
+      coupon3 = create(:coupon, merchant: merchant, status: "active")
+      coupon4 = create(:coupon, merchant: merchant, status: "active")
+      coupon5 = create(:coupon, merchant: merchant, status: "active")
+      coupon6 = create(:coupon, merchant: merchant, status: "active")
+
+      expect(coupon6.valid?).to be false
+      expect(coupon6.errors[:base]).to include("Merchant has maximum amount of coupons (5)")
     end
   end
 end
