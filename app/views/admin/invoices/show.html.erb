@@ -13,7 +13,15 @@
     </section>
       <% end %>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
-  <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %>
+  <%# <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %>
+
+  <% if @invoice.coupon %>
+    <p>Associated Coupon: <%= @invoice.coupon.name %> <%= @invoice.coupon.unique_code %></p>
+  <% end %>
+
+  <p>Subtotal: <%= number_to_currency(@invoice.subtotal) %></p>
+  <p>Grand Total Revenue: <%= number_to_currency(@invoice.grand_total_revenue) %></p>
+  
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>

@@ -6,8 +6,10 @@ describe "Admin Invoices Index Page" do
 
     @c1 = Customer.create!(first_name: "Yo", last_name: "Yoz", address: "123 Heyyo", city: "Whoville", state: "CO", zip: 12345)
     @c2 = Customer.create!(first_name: "Hey", last_name: "Heyz")
+    
+    @coupon = create(:coupon, merchant: @m1, value: 50, value_type: "%", status: "active")
 
-    @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-25 09:54:09")
+    @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-25 09:54:09", coupon: @coupon)
     @i2 = Invoice.create!(customer_id: @c2.id, status: 1, created_at: "2012-03-25 09:30:09")
 
     @item_1 = Item.create!(name: "test", description: "lalala", unit_price: 6, merchant_id: @m1.id)
@@ -54,7 +56,8 @@ describe "Admin Invoices Index Page" do
   end
 
   it "should display the total revenue the invoice will generate" do
-    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
+    # updated test to reflect change
+    expect(page).to have_content("Grand Total Revenue: $#{@i1.grand_total_revenue}")
 
     expect(page).to_not have_content(@i2.total_revenue)
   end
@@ -67,6 +70,24 @@ describe "Admin Invoices Index Page" do
 
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq("completed")
+    end
+  end
+
+  describe "8. Admin Invoice Show Page: Subtotal and Grand Total Revenues" do
+    # As an admin
+    # When I visit one of my admin invoice show pages
+    # I see the name and code of the coupon that was used (if there was a coupon applied)
+    # And I see both the subtotal revenue from that invoice (before coupon) and the grand total revenue (after coupon) for this invoice.
+    
+    # * Alternate Paths to consider: 
+    # 1. There may be invoices with items from more than 1 merchant. Coupons for a merchant only apply to items from that merchant.
+    # 2. When a coupon with a dollar-off value is used with an invoice with multiple merchants' items,
+    # the dollar-off amount applies to the total amount even though there may be items present from another merchant.
+
+    it "does the same as US7 for the Admin side" do
+      expect(page).to have_content("Associated Coupon: #{@coupon.name} #{@coupon.unique_code}")
+      expect(@i1.subtotal).to eq(30)
+      expect(@i1.grand_total_revenue).to eq(15)
     end
   end
 end
