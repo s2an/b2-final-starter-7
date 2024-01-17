@@ -20,7 +20,7 @@ RSpec.describe "merchant coupon show" do
     
     # (Note: "use" of a coupon should be limited to successful transactions.)
     
-    it "displays the associated coupons, thier status, and number of times used" do
+    it "displays the associated coupons, thier status, and number of successful uses" do
       @coupon = create(:coupon, merchant: @merchant)
 
       visit merchant_coupon_path(@merchant, @coupon)
@@ -32,7 +32,9 @@ RSpec.describe "merchant coupon show" do
       expect(page).to have_content(@coupon.value)
       expect(page).to have_content(@coupon.value_type)
       expect(page).to have_content(@coupon.status)
-      expect(page).to have_content(@coupon.redemptions)    
+      expect(page).to have_content(@coupon.redemptions)
+      #confirms count of redemptions
+      expect(@coupon.redemptions).to eq(2)
     end
   end
   
