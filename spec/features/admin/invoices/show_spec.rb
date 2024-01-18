@@ -85,6 +85,7 @@ describe "Admin Invoices Index Page" do
     # the dollar-off amount applies to the total amount even though there may be items present from another merchant.
 
     it "does the same as US7 for the Admin side" do
+      save_and_open_page
       expect(page).to have_content("Associated Coupon: #{@coupon.name} #{@coupon.unique_code}")
       expect(@i1.subtotal).to eq(30)
       expect(@i1.grand_total_revenue).to eq(15)

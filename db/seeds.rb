@@ -6,13 +6,16 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-# Rake::Task["csv_load:all"].invoke
+Rake::Task["csv_load:all"].invoke
 
 merchants = Merchant.create([{ name: "Merchant 1", status: 1 }, { name: "Merchant 2", status: 0 }])
 
-coupons = Coupon.create([{ name: "SpringSale2024", unique_code: "SPRING24", value: 10, status: "active", merchant_id: 1, value_type: "%", redemptions: 0 },
-                          { name: "SummerSale2024", unique_code: "SUMMER24", value: 15, status: "inactive", merchant_id: 2, value_type: "$", redemptions: 0 },
-                          { name: "FallSale2024", unique_code: "FALL24", value: 20, status: "active", merchant_id: 3, value_type: "$", redemptions: 5 }])
+coupons = Coupon.create([{ name: "SpringSale2024", unique_code: "SPRING24", value: 10, status: "active", merchant_id: 1, value_type: "%", redemptions: 2 },
+                          { name: "SummerSale2024", unique_code: "SUMMER24", value: 15, status: "inactive", merchant_id: 2, value_type: "$", redemptions: 3 },
+                          { name: "FallSale2024", unique_code: "FALL24", value: 20, status: "active", merchant_id: 3, value_type: "$", redemptions: 4 },
+                          { name: "WinterSale2024", unique_code: "WINTER24", value: 5, status: "active", merchant_id: 3, value_type: "$", redemptions: 4 },
+                          { name: "AutumnSale2024", unique_code: "AUTUMN24", value: 50, status: "active", merchant_id: 3, value_type: "$", redemptions: 5 },
+                          { name: "SeasonSale2024", unique_code: "SEASON24", value: 200, status: "active", merchant_id: 4, value_type: "%", redemptions: 5 }])
 
 customers = Customer.create([{ first_name: "John", last_name: "Doe", address: "123 Main St", city: "Richmond", state: "VA", zip: 12345 },
                              { first_name: "Jane", last_name: "Smith", address: "123 Other Rd", city: "Roanoke", state: "VA", zip: 54321 }])

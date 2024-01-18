@@ -126,6 +126,7 @@ RSpec.describe "invoices show" do
       transaction = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: invoice.id)
       
       visit merchant_invoice_path(merchant, invoice)
+      save_and_open_page
       
       expect(invoice.grand_total_revenue).to eq(5.0)
     end

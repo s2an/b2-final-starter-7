@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_16_054251) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_18_033601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_054251) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "value_type"
-    t.integer "redemptions"
+    t.integer "redemptions", default: 0
     t.index ["merchant_id"], name: "index_coupons_on_merchant_id"
   end
 

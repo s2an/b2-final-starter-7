@@ -19,6 +19,20 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
+  def apply_coupons
+
+    percent_coupons = merchant.coupons
+                      .where(status: "active", value_type: "%")
+                      .pluck(:id, :value)
+
+    dollar_coupons = merchant.coupons
+                    .where(status: "active", value_type: "$")
+                    .pluck(:id, :value)
+
+    
+  end
+
+
   def coupon_discount(total)
     return total unless coupon && coupon.status == "active"
     
